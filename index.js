@@ -25,13 +25,6 @@ const validateAllocation = async (
     return allocation.indexer
 }
 
-const attestation  =     {"requestCID":"0x2ba6a61c77bb81fbfba6bdca12fe448b3abad6d883a56a6c00c82fd60cc1f1c6",
-    "responseCID":"0xd8887e0692ea74e7614307f3580273bbbdf5ff9a02c229078083ce2fa2b6b44c",
-    "subgraphDeploymentID":"0xac4bc048821bc17da44795c09a807087e6ca06893cdf233f7bb04a20fdf62e41",
-    "r":"0xcc9355358720f1f65ca8aaca24ba106b7194036494d595ccdc71aa294a3a102a",
-    "s":"0x2455ac163ca1097387bd8506f75a189a18791ca912e170615618c0f50c37874b",
-    "v":27}
-
 // Recover signature
 async function main( attestation) {
     console.log('## Recovering signer')
