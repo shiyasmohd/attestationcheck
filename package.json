@@ -1,0 +1,13 @@
+{
+  "name": "attestationcheck",
+  "version": "1.0.0",
+  "dependencies": {
+    "@graphprotocol/common-ts": "^2.0.7",
+    "@graphprotocol/contracts": "^5.2.2",
+    "ethers": "^6.8.1",
+    "process": "^0.11.10"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
