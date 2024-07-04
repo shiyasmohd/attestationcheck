@@ -3,17 +3,16 @@ const contractsAddresses = require("@graphprotocol/contracts/addresses.json");
 const abi = require('@graphprotocol/contracts/dist/abis/L2Staking.json');
 const ethers = require('ethers');
 const process = require('process');
+const { exec } = require('child_process');
 
-const defaultChainId  = 42161;
 const AddressZero = '0x0000000000000000000000000000000000000000'
 
-// Get the chainId from the command line arguments or use the default
-const chainId = process.argv.length > 3 ? parseInt(process.argv[3], 10) : defaultChainId;
+const chainId = 42161 // Arbitrum ChainID
 const provider = ethers.getDefaultProvider(chainId);
 
 const contracts = contractsAddresses[chainId];
 const staking = contracts.L2Staking || contracts.L1Staking;
-const stakingContract  = new ethers.Contract( staking.address, abi , provider )
+const stakingContract = new ethers.Contract(staking.address, abi, provider)
 const validateAllocation = async (
     contracts,
     allocationID,
@@ -26,7 +25,7 @@ const validateAllocation = async (
 }
 
 // Recover signature
-async function main( attestation) {
+async function main(attestation) {
     console.log('## Recovering signer')
 
     const allocationID = recoverAttestation(
@@ -40,7 +39,24 @@ async function main( attestation) {
     // Look for allocation and indexer address
     console.log(`## Looking for on-chain allocation data`)
     const indexerAddress = await validateAllocation(contracts, allocationID)
-    console.log('Indexer: ' + indexerAddress)
+    let url = `https://thegraph.com/explorer/profile/${indexerAddress}`
+    openUrl(url)
+    console.log('Indexer Profile: ' + url)
+
+}
+
+const openUrl = (url) => {
+    switch (process.platform) {
+        case 'darwin':
+            exec(`open ${url}`);
+            break;
+        case 'win32':
+            exec(`start ${url}`);
+            break;
+        case 'linux':
+            exec(`xdg-open ${url}`);
+            break;
+    }
 }
 
 // Check if attestation argument is provided
@@ -55,5 +71,5 @@ if (process.argv.length > 2) {
         console.error('Invalid attestation JSON format:', error);
     }
 } else {
-    console.error('Usage: node script.js <attestation> [chainId]');
+    console.error('Usage: node script.js <attestation>');
 }
