@@ -1,13 +1,22 @@
 {
   "name": "attestationcheck",
   "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "clean": "rm -rf dist"
+  },
   "dependencies": {
     "@graphprotocol/common-ts": "^2.0.7",
     "@graphprotocol/contracts": "^5.2.2",
     "ethers": "^6.8.1",
     "process": "^0.11.10"
   },
-  "scripts": {
-    "start": "node index.js"
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
   }
 }
